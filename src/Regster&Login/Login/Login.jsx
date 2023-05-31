@@ -2,13 +2,14 @@ import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-
 import { Helmet } from "react-helmet-async";
 import './Login.css'
 import loginBaner from '../../assets/others/authentication.gif'
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 
 const Login = () => {
-    const captchaRef = useRef(null)
     const [Disable, setDisable] = useState(true)
+    const {signin}=useContext(AuthContext)
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -21,12 +22,20 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        signin(email,password)
+        .then(result =>{
+            const loguser= result.user 
+            console.log(loguser);
+        })
+        .catch(error => {
+            alert(error.message)
+        })
 
     }
 
 
-    const handelcaptchaBtn = () => {
-        const user_captcha_value = captchaRef.current.value;
+    const handelcaptchaBtn =event => {
+        const user_captcha_value = event.target.value;
 
         if (validateCaptcha(user_captcha_value) == true) {
             setDisable(false)
@@ -67,8 +76,8 @@ const Login = () => {
                                     <label className="label">
                                         <LoadCanvasTemplate />
                                     </label>
-                                    <input type="text" ref={captchaRef} name="captcha" placeholder="Enter captcha" className="input input-bordered" />
-                                    <button onClick={handelcaptchaBtn}  className="btn btn-outline btn-success btn-xs mt-2">VALIDATE</button>
+                                    <input type="text"  onBlur={handelcaptchaBtn} name="captcha" placeholder="Enter captcha" className="input input-bordered"  />
+                                    {/* <button  className="btn btn-outline btn-success btn-xs mt-2">VALIDATE</button> */}
 
                                     <label className="label">
                                         <p className="label-text-alt  text-xl">New here? <Link className=' link link-hover  text-orange-600'  to='/regster'> Create a New Account</Link></p>
