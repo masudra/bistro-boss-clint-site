@@ -3,13 +3,17 @@ import { Helmet } from "react-helmet-async";
 import './Login.css'
 import loginBaner from '../../assets/others/authentication.gif'
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 
 const Login = () => {
     const [Disable, setDisable] = useState(true)
     const {signin}=useContext(AuthContext)
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -26,6 +30,14 @@ const Login = () => {
         .then(result =>{
             const loguser= result.user 
             console.log(loguser);
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: ' Login  successful',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            navigate(from, { replace: true });
         })
         .catch(error => {
             alert(error.message)

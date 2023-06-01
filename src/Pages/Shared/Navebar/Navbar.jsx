@@ -1,4 +1,6 @@
 import { useContext } from "react";
+import {FaShoppingCart} from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
 
@@ -18,7 +20,16 @@ const Navbar = () => {
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/menu'>Our Menu</Link></li>
         <li><Link to='/order/Salad'>Our Order</Link></li>
-        {user ? <button onClick={handelLogoutBtn} className="btn ">Log Out</button> : <li><Link to='/login'>Login</Link></li>
+        <li><Link to='/secret'>Secret</Link></li>
+        <li><Link to='/'>
+            <button className="btn gap-2">
+                <FaShoppingCart></FaShoppingCart>
+                <div className="badge badge-secondary">+99</div>
+            </button></Link></li>
+
+        {user ? <> <li><p>{user.displayName}</p></li>
+            <button onClick={handelLogoutBtn} className="btn ">Log Out</button></>
+            : <li><Link to='/login'>Login</Link></li>
 
         }
 
