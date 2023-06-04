@@ -20,17 +20,39 @@ const Regster = () => {
             console.log(loguser);
             updateUser(data.name,data.photo)
             .then(() =>{
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: ' account Creat successful',
-                    showConfirmButton: false,
-                    timer: 1500
-                  })
-                  navigate('/')
-               
-                reset()
+                const sevedData = {name:data.name, email:data.email}
+                console.log(sevedData);
+                fetch('http://localhost:5000/users',{
+                    method: 'POST',
+                    headers:{
+                        'content-type':'application/json'
 
+                    },
+                    body: JSON.stringify(sevedData)
+
+
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if(data.insertedId){
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: ' account Creat successful',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                          navigate('/')
+                       
+                        reset()
+        
+
+                    }
+                })
+
+
+               
             })
             .catch(error =>{
                 alert(error.message)
