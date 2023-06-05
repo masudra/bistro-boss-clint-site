@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../../Pages/Shared/SocialLogin/SocialLogin';
 
 const Regster = () => {
 
@@ -21,7 +22,6 @@ const Regster = () => {
             updateUser(data.name,data.photo)
             .then(() =>{
                 const sevedData = {name:data.name, email:data.email}
-                console.log(sevedData);
                 fetch('http://localhost:5000/users',{
                     method: 'POST',
                     headers:{
@@ -117,6 +117,7 @@ const Regster = () => {
                                 </div>
                             </div>
                         </form>
+                        <SocialLogin></SocialLogin>
 
                     </div>
                     <div className="text-center lg:text-left">

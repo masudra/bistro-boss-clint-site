@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../../Pages/Shared/SocialLogin/SocialLogin';
 
 
 const Login = () => {
@@ -101,6 +102,7 @@ const Login = () => {
                                 </div>
                             </div>
                         </form>
+                        <SocialLogin></SocialLogin>
 
                     </div>
                     <div className="text-center lg:text-left">
